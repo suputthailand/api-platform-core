@@ -141,6 +141,8 @@ class SubresourceDataProviderTest extends TestCase
         $this->assertIdentifierManagerMethodCalls($managerProphecy);
 
         $classMetadataProphecy = $this->prophesize(ClassMetadata::class);
+        $classMetadataProphecy->getIdentifier()->shouldBeCalled()->willReturn($identifiers);
+        $classMetadataProphecy->getTypeOfField('id')->shouldBeCalled()->willReturn('integer');
         $classMetadataProphecy->hasAssociation('relatedDummies')->willReturn(true)->shouldBeCalled();
         $classMetadataProphecy->getAssociationMapping('relatedDummies')->shouldBeCalled()->willReturn(['type' => ClassMetadata::MANY_TO_MANY]);
 
@@ -199,6 +201,8 @@ class SubresourceDataProviderTest extends TestCase
         $qb->getDQL()->shouldBeCalled()->willReturn($dummyDQL);
 
         $classMetadataProphecy = $this->prophesize(ClassMetadata::class);
+        $classMetadataProphecy->getIdentifier()->shouldBeCalled()->willReturn($identifiers);
+        $classMetadataProphecy->getTypeOfField('id')->shouldBeCalled()->willReturn('integer');
         $classMetadataProphecy->hasAssociation('relatedDummies')->willReturn(true)->shouldBeCalled();
         $classMetadataProphecy->getAssociationMapping('relatedDummies')->shouldBeCalled()->willReturn(['type' => ClassMetadata::MANY_TO_MANY]);
 
@@ -225,6 +229,8 @@ class SubresourceDataProviderTest extends TestCase
         $rqb->expr()->shouldBeCalled()->willReturn($relatedExpProphecy->reveal());
 
         $rClassMetadataProphecy = $this->prophesize(ClassMetadata::class);
+        $rClassMetadataProphecy->getIdentifier()->shouldBeCalled()->willReturn($identifiers);
+        $rClassMetadataProphecy->getTypeOfField('id')->shouldBeCalled()->willReturn('integer');
         $rClassMetadataProphecy->hasAssociation('thirdLevel')->shouldBeCalled()->willReturn(true);
         $rClassMetadataProphecy->getAssociationMapping('thirdLevel')->shouldBeCalled()->willReturn(['type' => ClassMetadata::MANY_TO_ONE]);
 
@@ -285,6 +291,8 @@ class SubresourceDataProviderTest extends TestCase
         $this->assertIdentifierManagerMethodCalls($managerProphecy);
 
         $classMetadataProphecy = $this->prophesize(ClassMetadata::class);
+        $classMetadataProphecy->getIdentifier()->shouldBeCalled()->willReturn($identifiers);
+        $classMetadataProphecy->getTypeOfField('id')->shouldBeCalled()->willReturn('integer');
         $classMetadataProphecy->hasAssociation('relatedDummies')->willReturn(true)->shouldBeCalled();
         $classMetadataProphecy->getAssociationMapping('relatedDummies')->shouldBeCalled()->willReturn(['type' => ClassMetadata::MANY_TO_MANY]);
 

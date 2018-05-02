@@ -151,7 +151,6 @@ final class SubresourceDataProvider implements SubresourceDataProviderInterface
 
         $qb = $manager->createQueryBuilder();
         $alias = $queryNameGenerator->generateJoinAlias($identifier);
-        $relationType = $classMetadata->getAssociationMapping($previousAssociationProperty)['type'];
         $normalizedIdentifiers = isset($identifiers[$identifier]) ? $this->normalizeIdentifiers(
             $identifiers[$identifier],
             $manager,
