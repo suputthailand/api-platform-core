@@ -4,6 +4,7 @@ Feature: Search filter on collections
   I need to search for collections properties
 
   @createSchema
+  @dropSchema
   Scenario: Test ManyToMany with filter on join table
     Given there is a RelatedDummy with 4 friends
     When I add "Accept" header equal to "application/hal+json"
@@ -346,6 +347,7 @@ Feature: Search filter on collections
     }
     """
 
+  @dropSchema
   Scenario: Search for entities within an impossible range
     When I send a "GET" request to "/dummies?name=MuYm"
     Then the response status code should be 200
@@ -375,6 +377,7 @@ Feature: Search filter on collections
     """
 
   @createSchema
+  @dropSchema
   Scenario: Search related collection by name
     Given there are 3 dummy objects having each 3 relatedDummies
     When I add "Accept" header equal to "application/hal+json"
@@ -465,6 +468,7 @@ Feature: Search filter on collections
     """
 
 
+  @dropSchema
   Scenario: Get collection ordered by a non valid properties
     When I send a "GET" request to "/dummies?unknown=0"
     Then the response status code should be 200

@@ -57,7 +57,6 @@ class IriConverterTest extends TestCase
     {
         $routerProphecy = $this->prophesize(RouterInterface::class);
         $routerProphecy->match('/users/3')->willReturn([])->shouldBeCalledTimes(1);
-
         $converter = $this->getIriConverter($routerProphecy);
         $converter->getItemFromIri('/users/3');
     }
