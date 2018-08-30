@@ -155,13 +155,14 @@ final class SchemaBuilder implements SchemaBuilderInterface
         $queryFields = [];
         $shortName = $resourceMetadata->getShortName();
         $deprecationReason = $resourceMetadata->getGraphqlAttribute('query', 'deprecation_reason', '', true);
+        $returnType = $resourceMetadata->getGraphqlAttribute('query', 'return', $resourceClass);
 
-        if ($fieldConfiguration = $this->getResourceFieldConfiguration($resourceClass, $resourceMetadata, null, $deprecationReason, new Type(Type::BUILTIN_TYPE_OBJECT, true, $resourceClass), $resourceClass)) {
+        if ($fieldConfiguration = $this->getResourceFieldConfiguration($resourceClass, $resourceMetadata, null, $deprecationReason, new Type(Type::BUILTIN_TYPE_OBJECT, true, $returnType), $resourceClass)) {
             $fieldConfiguration['args'] += ['id' => ['type' => GraphQLType::id()]];
             $queryFields[lcfirst($shortName)] = $fieldConfiguration;
         }
 
-        if ($fieldConfiguration = $this->getResourceFieldConfiguration($resourceClass, $resourceMetadata, null, $deprecationReason, new Type(Type::BUILTIN_TYPE_OBJECT, false, null, true, null, new Type(Type::BUILTIN_TYPE_OBJECT, false, $resourceClass)), $resourceClass)) {
+        if ($fieldConfiguration = $this->getResourceFieldConfiguration($resourceClass, $resourceMetadata, null, $deprecationReason, new Type(Type::BUILTIN_TYPE_OBJECT, false, null, true, null, new Type(Type::BUILTIN_TYPE_OBJECT, false, $returnType)), $resourceClass)) {
             $queryFields[lcfirst(Inflector::pluralize($shortName))] = $fieldConfiguration;
         }
 
@@ -182,7 +183,7 @@ final class SchemaBuilder implements SchemaBuilderInterface
 
             if (!$this->isCollection($resourceType)) {
                 $itemMutationResolverFactory = $this->itemMutationResolverFactory;
-                $fieldConfiguration['resolve'] = $itemMutationResolverFactory($resourceClass, null, $mutationName);
+                $fieldConfiguration['resolve'] = $itemMutationResolverFactory($resourceClass, null, $mutationName, $resourceMetadata);
             }
         }
 
@@ -258,7 +259,7 @@ final class SchemaBuilder implements SchemaBuilderInterface
                 $resolve = null;
             } elseif ($this->isCollection($type)) {
                 $resolverFactory = $this->collectionResolverFactory;
-                $resolve = $resolverFactory($className, $rootResource, $mutationName);
+                $resolve = $resolverFactory($className, $rootResource, $mutationName, $resourceMetadata);
             } else {
                 $resolve = $this->itemResolver;
             }
@@ -369,7 +370,8 @@ final class SchemaBuilder implements SchemaBuilderInterface
                 try {
                     $resourceMetadata = $this->resourceMetadataFactory->create($resourceClass);
                     if ([] === $resourceMetadata->getGraphql() ?? []) {
-                        return null;
+                        // Not now.
+                        // return null;
                     }
                 } catch (ResourceClassNotFoundException $e) {
                     // Skip objects that are not resources for now

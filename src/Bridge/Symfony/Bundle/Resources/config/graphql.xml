@@ -9,7 +9,7 @@
 
         <!-- Resolvers -->
 
-        <service id="api_platform.graphql.resolver.factory.collection" class="ApiPlatform\Core\GraphQl\Resolver\Factory\CollectionResolverFactory" public="false">
+        <service id="api_platform.graphql.resolver.factory.collection" class="ApiPlatform\Core\GraphQl\Resolver\Factory\CollectionResolverFactory" public="true">
             <argument type="service" id="api_platform.collection_data_provider" />
             <argument type="service" id="api_platform.subresource_data_provider" />
             <argument type="service" id="serializer" />
@@ -20,7 +20,7 @@
             <argument>%api_platform.collection.pagination.enabled%</argument>
         </service>
 
-        <service id="api_platform.graphql.resolver.factory.item_mutation" class="ApiPlatform\Core\GraphQl\Resolver\Factory\ItemMutationResolverFactory" public="false">
+        <service id="api_platform.graphql.resolver.factory.item_mutation" class="ApiPlatform\Core\GraphQl\Resolver\Factory\ItemMutationResolverFactory" public="true">
             <argument type="service" id="api_platform.iri_converter" />
             <argument type="service" id="api_platform.data_persister" />
             <argument type="service" id="serializer" />
